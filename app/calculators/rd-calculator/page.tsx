@@ -1,49 +1,12 @@
-"use client";
+import type { Metadata } from "next";
+import RDCalculatorClient from "./RDCalculatorClient";
 
-import { useState } from "react";
-import RDForm from "./RDForm";
+export const metadata: Metadata = {
+  title: "RD Calculator – Recurring Deposit Maturity Calculator",
+  description:
+    "Use this RD calculator to estimate recurring deposit maturity amount, total investment, and returns. Compare RD returns across banks with adjustable interest rates.",
+};
 
-export default function RDCalculator() {
-  const [forms, setForms] = useState<number[]>([0]);
-
-  const addForm = () => {
-    if (forms.length >= 2) return;
-    setForms((prev) => [...prev, prev.length]);
-  };
-
-  return (
-    <div className="max-w-7xl mx-auto p-6 space-y-4">
-
-      {/* Header row with Add button */}
-      <div className="flex justify-end">
-        {forms.length < 2 && (
-          <button
-            onClick={addForm}
-            className="px-4 py-2 border rounded-md text-sm font-medium hover:bg-gray-100"
-          >
-            + Add bank for comparison
-          </button>
-        )}
-      </div>
-
-      {/* Rates disclaimer */}
-      <div className="text-sm text-gray-600 bg-gray-50 border rounded-md p-3">
-        <strong>Note on interest rates:</strong>{" "}
-        Interest rates shown are indicative and based on publicly available
-        information. Rates may change or vary across branches. Use the slider or
-        input field to adjust the interest rate based on your assumptions.
-      </div>
-
-      {/* Forms */}
-      <div
-        className={`grid gap-6 ${
-          forms.length === 1 ? "grid-cols-1" : "grid-cols-2"
-        }`}
-      >
-        {forms.map((id) => (
-          <RDForm key={id} />
-        ))}
-      </div>
-    </div>
-  );
+export default function RDCalculatorPage() {
+  return <RDCalculatorClient />;
 }
