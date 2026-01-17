@@ -42,7 +42,7 @@ footer {
   bottom: 0;
   width: 100%;
   z-index: 50;
-  background-color: var(--foreground);
+  background-color: #364153;
   color: var(--background);
 }
 

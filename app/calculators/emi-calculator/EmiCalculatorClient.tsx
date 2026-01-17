@@ -36,84 +36,122 @@ export default function EMICalculator() {
   const result = calculateEMI(principal, rate, years);
 
   return (
-    <div
-      className="mx-auto w-full max-w-md sm:max-w-lg lg:max-w-xl
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "What is EMI?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "EMI stands for Equated Monthly Instalment, which is the fixed amount paid every month to repay a loan.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "How is EMI calculated?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "EMI is calculated using loan amount, interest rate, and tenure. It includes both principal and interest components.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Does EMI remain the same throughout the loan tenure?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Yes, in most standard loans, the EMI amount remains constant while the interest and principal portions change over time.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
+
+      <div
+        className="mx-auto w-full max-w-md sm:max-w-lg lg:max-w-xl
                  bg-white border rounded-lg
                  px-4 sm:px-6 py-6 space-y-6"
-    >
-      <Breadcrumbs
-        items={[{ label: "Home", href: "/" }, { label: "EMI Calculator" }]}
-      />
-      {/* H1 */}
-      <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
-        EMI Calculator
-      </h1>
+      >
+        <Breadcrumbs
+          items={[{ label: "Home", href: "/" }, { label: "EMI Calculator" }]}
+        />
+        {/* H1 */}
+        <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
+          EMI Calculator
+        </h1>
 
-      {/* Loan Amount */}
-      <div>
-        <label className="block text-sm font-medium mb-1">
-          Loan Amount (₹)
-        </label>
-        <input
-          value={amountInput}
-          onChange={(e) =>
-            setAmountInput(formatCurrency(parseNumber(e.target.value)))
-          }
-          className="border rounded-md p-2 sm:p-3 w-full text-sm sm:text-base"
+        {/* Loan Amount */}
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Loan Amount (₹)
+          </label>
+          <input
+            value={amountInput}
+            onChange={(e) =>
+              setAmountInput(formatCurrency(parseNumber(e.target.value)))
+            }
+            className="border rounded-md p-2 sm:p-3 w-full text-sm sm:text-base"
+          />
+        </div>
+
+        {/* Interest Rate */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium">
+            Interest Rate (%): <span className="font-semibold">{rate}</span>
+          </label>
+          <Slider
+            min={5}
+            max={20}
+            step={0.1}
+            value={rate}
+            onChange={(v) => setRate(v as number)}
+          />
+        </div>
+
+        {/* Tenure */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium">
+            Loan Tenure: <span className="font-semibold">{years}</span> years
+          </label>
+          <Slider
+            min={1}
+            max={30}
+            value={years}
+            onChange={(v) => setYears(v as number)}
+          />
+        </div>
+
+        {/* Results */}
+        <div className="border-t pt-4 text-sm space-y-1">
+          <p>
+            <strong>Monthly EMI:</strong> ₹
+            {formatCurrency(Math.round(result.emi))}
+          </p>
+          <p>
+            <strong>Total Interest:</strong> ₹
+            {formatCurrency(Math.round(result.interest))}
+          </p>
+          <p>
+            <strong>Total Payment:</strong> ₹
+            {formatCurrency(Math.round(result.totalPayment))}
+          </p>
+        </div>
+        <InternalCalculatorLinks
+          links={[
+            { href: "/calculators/sip-calculator", label: "SIP Calculator" },
+            {
+              href: "/calculators/fd-calculator",
+              label: "Fixed Deposit Calculator",
+            },
+          ]}
         />
       </div>
-
-      {/* Interest Rate */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          Interest Rate (%): <span className="font-semibold">{rate}</span>
-        </label>
-        <Slider
-          min={5}
-          max={20}
-          step={0.1}
-          value={rate}
-          onChange={(v) => setRate(v as number)}
-        />
-      </div>
-
-      {/* Tenure */}
-      <div className="space-y-2">
-        <label className="block text-sm font-medium">
-          Loan Tenure: <span className="font-semibold">{years}</span> years
-        </label>
-        <Slider
-          min={1}
-          max={30}
-          value={years}
-          onChange={(v) => setYears(v as number)}
-        />
-      </div>
-
-      {/* Results */}
-      <div className="border-t pt-4 text-sm space-y-1">
-        <p>
-          <strong>Monthly EMI:</strong> ₹
-          {formatCurrency(Math.round(result.emi))}
-        </p>
-        <p>
-          <strong>Total Interest:</strong> ₹
-          {formatCurrency(Math.round(result.interest))}
-        </p>
-        <p>
-          <strong>Total Payment:</strong> ₹
-          {formatCurrency(Math.round(result.totalPayment))}
-        </p>
-      </div>
-      <InternalCalculatorLinks
-        links={[
-          { href: "/calculators/sip-calculator", label: "SIP Calculator" },
-          {
-            href: "/calculators/fd-calculator",
-            label: "Fixed Deposit Calculator",
-          },
-        ]}
-      />
-    </div>
+    </>
   );
 }

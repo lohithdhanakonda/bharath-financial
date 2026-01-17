@@ -67,6 +67,42 @@ export default function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "What is Bharath Financial?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Bharath Financial is a free platform offering Indian financial calculators such as SIP, FD, RD, EMI, PPF, CAGR, Gratuity, and SWP calculators.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Are Bharath Financial calculators free to use?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Yes, all calculators on Bharath Financial are completely free and do not require login or personal details.",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Are the calculator results accurate?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "The results are indicative and meant for financial planning and comparison. Actual returns may vary based on bank policies and market conditions.",
+                },
+              },
+            ],
+          }),
+        }}
+      />
+
       <h1 className="sr-only">
         Bharath Financial – Indian Financial Calculators
       </h1>
